@@ -1,0 +1,8 @@
+Date,AvgTemp,Humidity,WindSpeed,Precipitation,Condition
+2024-12-25,-1.6,77,13.0,0.0,Sunny
+2024-12-26,-2.3,81,10.4,0.0,Sunny
+2024-12-27,-0.9,80,8.3,0.0,Partly cloudy
+2024-12-28,4.4,98,5.4,53.27,Heavy rain
+2024-12-29,7.1,99,28.1,0.0,Fog
+2024-12-30,10.0,90,30.6,67.64,Heavy rain
+2024-12-31,4.5,96,25.9,4.19,Fog
