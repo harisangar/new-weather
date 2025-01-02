@@ -1,7 +1,7 @@
-from flask import Blueprint,render_template,request,flash,redirect,url_for
-# from .models import User
+from flask import Blueprint, jsonify,render_template,request,flash,redirect,url_for,current_app  
+from .models import User
 from . import db
-# from flask_login import login_user, login_required,logout_user,current_user
+from flask_login import login_user, login_required,logout_user,current_user
 
 from werkzeug.security import generate_password_hash,check_password_hash
 
@@ -10,57 +10,74 @@ auth = Blueprint('auth',__name__)
 @auth.route('/login',methods=["GET","POST"])
 def login():
     if request.method == 'POST':
-        email = request.form.get('email')
-        password = request.form.get('password')
+        data = request.get_json()
+        email = data.get('email')
+        password = data.get('password')
 
         user = User.query.filter_by(email=email).first()
         if user:
             if check_password_hash(user.password,password):
                 flash('logged in successfully',category='success')
                 login_user(user,remember=True)
-                return redirect(url_for('views.home'))
+                return jsonify({'message':"login successfully","success":True})
             else:
-                flash('incorrect password,try again',category='error')
+                return jsonify({'message':"email or password error"})
         else:
-            flash("email does not exist ",category='error')
+            return jsonify({'message':"user does not exists"})
 
 
  
     return render_template("login.html",user=current_user)
     
-@auth.route('/logout')
+@auth.route('/logout',methods=['POST','GET'])
 @login_required
 def logout():
-    logout_user()
-    return redirect(url_for('auth.login'))
+    try:
+        if current_user.is_authenticated:
+            # Log the user's logout attempt
+            current_app.logger.info(f"User {current_user.username} is logging out.")
+        
+        # Call logout_user() to log the user out
+        logout_user()
+        
+        # Return a success message
+        return jsonify({"success": True}), 200
 
-@auth.route('/sign-up',methods=["GET","POST"])
+    except Exception as e:
+        # Log the error for debugging
+        current_app.logger.error(f"Error during logout: {str(e)}")
+        
+        # Return a failure message with error details
+        return jsonify({"success": False, "error": str(e)}), 500
+
+@auth.route('/signup',methods=["GET","POST"])
 def sign_up():
     if request.method == "POST":
-        email = request.form.get('email')
-        first_name = request.form.get('firstName')
-        password1 = request.form.get('password1')
-        password2 = request.form.get('password2')
+        data = request.get_json()
+        email = data.get('email')
+        username = data.get('username')
+        password1 = data.get('password1')
+        password2 = data.get('password2')
 
         user = User.query.filter_by(email=email).first()
         if user:
-            flash('email already exists',category='error')
+           return jsonify({'message':"email already exists"})
         if len(email) <4:
-            flash("email must be greater than 4 character",category='error')
-        elif len(first_name) <2:
-            flash("firstname must be greater than 1 character",category='error')
+            return jsonify({'message':"email should greater than 4 char",})
+        elif len(username) <2:
+            return jsonify({'message':"username should greater than 2 char",})
         elif password1 != password2:
-            flash("passwords dont match",category='error')
+            return jsonify({'message':"password mismatch",})
         elif len(password1) <7:
-            flash("passwords must be atleast 7 character",category='error')
+            return jsonify({'message':"password must greater than 7 char",})
         else:
-            new_user = User(email=email,first_name=first_name,password=generate_password_hash(password1,method='pbkdf2:sha256'))
+            new_user = User(email=email,username=username,password=generate_password_hash(password1,method='pbkdf2:sha256'))
             db.session.add(new_user)
             db.session.commit()
-            login_user(user,remember=True)
+            login_user(new_user,remember=True)
 
 
-            flash("account created",category='success')
-            return redirect(url_for('views.home'))
+           
+            return jsonify({'message':"user created successfully","success":True})
 
-    return render_template("sign_up.html",user=current_user )
+    return render_template("signup.html",user=current_user )

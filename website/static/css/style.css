@@ -25770,3 +25770,23 @@ footer a:hover {
     font-size: 12px;
   }
 }
+
+.username-box {
+  padding: 15px 20px;
+  background-color: #2196f3; /* A cool blue background */
+  color: #fff; /* White text color */
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  border-radius: 25px; /* Rounded corners */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Soft shadow around the div */
+  margin: 20px auto; /* Center the div horizontally */
+  /* width: fit-content;  */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions */
+}
+
+/* Hover effect: scale and shadow */
+.username-box:hover {
+  transform: scale(1.05); /* Slight zoom effect */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Darker shadow */
+}

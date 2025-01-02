@@ -18,8 +18,8 @@
     <meta name="author" content="hencework" />
 
     <!-- Favicon -->
-    <!-- <link rel="shortcut icon" href="favicon.ico" /> -->
-    <!-- <link rel="icon" href="favicon.ico" type="image/x-icon" /> -->
+    <!-- <link rel="shortcut icon" href="favicon.ico" />
+    <link rel="icon" href="favicon.ico" type="image/x-icon" /> -->
 
     <!-- vector map CSS -->
     <!-- <link
@@ -80,11 +80,11 @@
           </a>
         </div>
         <div class="form-group mb-0 pull-right">
-          <span class="inline-block pr-10">Don't have an account?</span>
+          <span class="inline-block pr-10">Already have an account?</span>
           <a
             class="inline-block btn btn-success btn-rounded btn-outline"
-            href="signup"
-            >Sign Up</a
+            href="login"
+            >Sign In</a
           >
         </div>
         <div class="clearfix"></div>
@@ -101,14 +101,28 @@
                   <div class="col-sm-12 col-xs-12">
                     <div class="mb-30">
                       <h3 class="text-center txt-dark mb-10">
-                        Sign in to Droopy
+                        Sign up to Droopy
                       </h3>
                       <h6 class="text-center nonecase-font txt-grey">
                         Enter your details below
                       </h6>
                     </div>
                     <div class="form-wrap">
-                      <form id="loginForm">
+                      <form id="signupForm">
+                        <div class="form-group">
+                          <label
+                            class="control-label mb-10"
+                            for="exampleInputName_1"
+                            >Username</label
+                          >
+                          <input
+                            type="text"
+                            class="form-control"
+                            required=""
+                            id="exampleInputName_1"
+                            placeholder="Username"
+                          />
+                        </div>
                         <div class="form-group">
                           <label
                             class="control-label mb-10"
@@ -129,12 +143,6 @@
                             for="exampleInputpwd_2"
                             >Password</label
                           >
-                          <a
-                            class="capitalize-font txt-primary block mb-10 pull-right font-12"
-                            href="forgot-password.html"
-                            >forgot password ?</a
-                          >
-                          <div class="clearfix"></div>
                           <input
                             type="password"
                             class="form-control"
@@ -143,7 +151,20 @@
                             placeholder="Enter pwd"
                           />
                         </div>
-
+                        <div class="form-group">
+                          <label
+                            class="pull-left control-label mb-10"
+                            for="exampleInputpwd_3"
+                            >Confirm Password</label
+                          >
+                          <input
+                            type="password"
+                            class="form-control"
+                            required=""
+                            id="exampleInputpwd_3"
+                            placeholder="Enter pwd"
+                          />
+                        </div>
                         <!-- <div class="form-group">
                           <div
                             class="checkbox checkbox-primary pr-10 pull-left"
@@ -153,7 +174,10 @@
                               required=""
                               type="checkbox"
                             />
-                            <label for="checkbox_2"> Keep me logged in</label>
+                            <label for="checkbox_2">
+                              I agree to all
+                              <span class="txt-primary">Terms</span></label
+                            >
                           </div>
                           <div class="clearfix"></div>
                         </div> -->
@@ -162,7 +186,7 @@
                             type="submit"
                             class="btn btn-success btn-rounded"
                           >
-                            sign in
+                            sign Up
                           </button>
                         </div>
                       </form>

@@ -1,13 +1,16 @@
 from datetime import datetime, timedelta
 from flask import Blueprint,render_template,request,flash,jsonify,json
-from flask_login import  login_required,logout_user,current_user
+from flask_login import  login_required,current_user
 from website.models import WeatherData
 from . import db
 from . import fetch_and_store_weather,fetchcityeather,fetchdashboarddata
 views = Blueprint('views',__name__)
 
+
+
+
 @views.route('/',methods=['GET'])
-# @login_required
+@login_required
 def home():
     fetch_and_store_weather()
     jaffna_data=fetchdashboarddata("Jaffna")
@@ -32,10 +35,11 @@ def home():
 
 
 
-    return render_template("weather.html",jaffna_data=jaffna_data,vavuniya_data=vavuniya_data,colombo_data=colombo_data,trinco_data=trinco_data,city_names=city_names)
+    return render_template("weather.html",jaffna_data=jaffna_data,vavuniya_data=vavuniya_data,colombo_data=colombo_data,trinco_data=trinco_data,city_names=city_names,username=current_user.username)
 
 
 @views.route('/city', methods=['GET', 'POST'])
+@login_required
 def fetchcity():
     city_name = request.args.get('name')  # or use 'city_name' based on your preference
     
